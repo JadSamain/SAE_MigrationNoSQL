@@ -1,0 +1,50 @@
+CREATE TABLE Crime(
+   code_index VARCHAR(50),
+   lib_index VARCHAR(50),
+   PRIMARY KEY(code_index)
+);
+
+CREATE TABLE Departement(
+   id_dep VARCHAR(50),
+   lib_dep VARCHAR(50),
+   PRIMARY KEY(id_dep)
+);
+
+CREATE TABLE Brigade(
+   id_brigade VARCHAR(50),
+   lib_brigade VARCHAR(50),
+   is_pn VARCHAR(50),
+   id_dep VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_brigade),
+   FOREIGN KEY(id_dep) REFERENCES Departement(id_dep)
+);
+
+CREATE TABLE PN(
+   id_pn VARCHAR(50),
+   lib_pn VARCHAR(50),
+   perimetre VARCHAR(50),
+   id_brigade VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_pn),
+   UNIQUE(id_brigade),
+   FOREIGN KEY(id_brigade) REFERENCES Brigade(id_brigade)
+);
+
+CREATE TABLE GN(
+   id_gn VARCHAR(50),
+   lib_gn VARCHAR(50),
+   id_brigade VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_gn),
+   UNIQUE(id_brigade),
+   FOREIGN KEY(id_brigade) REFERENCES Brigade(id_brigade)
+);
+
+CREATE TABLE Enregistrer(
+   code_index VARCHAR(50),
+   id_brigade_1 VARCHAR(50),
+   id_brigade VARCHAR(50),
+   id_crime VARCHAR(50),
+   annee VARCHAR(50),
+   PRIMARY KEY(code_index, id_brigade_1),
+   FOREIGN KEY(code_index) REFERENCES Crime(code_index),
+   FOREIGN KEY(id_brigade_1) REFERENCES Brigade(id_brigade)
+);
